@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import fetchData from '@/lib/fetchData';
 import { MediaItem } from '@/types/LocalTypes';
 import {
