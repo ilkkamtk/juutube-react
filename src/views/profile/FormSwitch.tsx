@@ -9,9 +9,7 @@ const FormSwitch = () => {
   const switchForm = () => setIsLogin(!isLogin);
   return (
     <>
-      <Card>
-        {isLogin ? <LoginForm /> : <RegisterForm switchForm={switchForm} />}
-      </Card>
+      <Card>{isLogin ? <LoginForm /> : <RegisterForm />}</Card>
       <div className="w-full flex justify-center">
         {isLogin ? 'Dont have an account?' : 'Already have an account?'}
       </div>
