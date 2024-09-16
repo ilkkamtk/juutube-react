@@ -31,7 +31,7 @@ const ThumbCarousel = ({ images, ...props }: ThumbCarouselProps) => {
       src={
         current
           ? import.meta.env.VITE_FILE_SERVER + current
-          : 'https://placehold.co/381x214?text=Live+Stream'
+          : 'https://placehold.co/640x400?text=Live+Stream'
       }
       crossOrigin="anonymous"
       onMouseEnter={() => images.length > 0 && setPlaying(true)}

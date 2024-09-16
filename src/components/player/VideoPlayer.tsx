@@ -20,6 +20,8 @@ const VideoPlayer = (props: { mediaItem: MediaItem }) => {
     <>
       <div className="relative w-full aspect-video rounded-lg overflow-hidden">
         <ReactPlayer
+          width="100%"
+          height="100%"
           controls
           playing
           ref={videoRef}

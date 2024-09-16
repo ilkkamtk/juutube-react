@@ -11,7 +11,7 @@ import { MediaProvider } from './contexts/MediaContext';
 
 function App() {
   return (
-    <Router>
+    <Router basename={import.meta.env.BASE_URL}>
       <UserProvider>
         <MediaProvider>
           <Routes>

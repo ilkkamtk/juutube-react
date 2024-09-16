@@ -7,10 +7,12 @@ import { useFile, useMedia } from '@/hooks/apiHooks';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from '@/hooks/formHooks';
 import { UploadResponse } from '@/types/LocalTypes';
+import { useMediaContext } from '@/hooks/contextHooks';
 
 const MediaForm = () => {
   const [mediaType, setMediaType] = useState<'video' | 'live_stream'>('video');
   const [file, setFile] = useState<File | null>(null);
+  const { refreshMedia, refreshSingleMedia } = useMediaContext();
 
   const { postFile } = useFile();
   const { postMedia } = useMedia();
@@ -54,7 +56,8 @@ const MediaForm = () => {
 
       const mediaResult = await postMedia(fileResult, mediaInputs, token);
       alert(mediaResult.message);
-      // TODO: redirect to Profile
+      refreshMedia();
+      refreshSingleMedia();
       navigate('/profile');
     } catch (e) {
       console.log((e as Error).message);

@@ -17,7 +17,7 @@ const TopBar = () => {
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <div className="flex items-center gap-4">
           <Link to="/" className="flex items-center gap-2">
-            <img src="/logo.jpg" alt="logo" width="200" height="50" />
+            <img src="./logo.jpg" alt="logo" width="200" height="50" />
             <span className="sr-only">Acme Inc</span>
           </Link>
         </div>
