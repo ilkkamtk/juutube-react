@@ -1,6 +1,6 @@
 // UserContext.tsx
 import { useAuthentication, useUser } from '@/hooks/apiHooks';
-import { AuthContextType, Credentials } from '@/types/LocalTypes';
+import { AuthContextType, Credentials } from '@sharedTypes/DBTypes';
 import { UserWithNoPassword } from '@sharedTypes/DBTypes';
 import React, { createContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -52,6 +52,9 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
         // set user to state
         setUser(userResponse.user);
         // when page is refreshed, the user is redirected to origin (see ProtectedRoute.tsx)
+        if (!location.state) {
+          return;
+        }
         const origin = location.state.from.pathname || '/';
         navigate(origin);
       }

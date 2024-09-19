@@ -1,4 +1,4 @@
-import { MediaItem } from '@/types/LocalTypes';
+import { MediaItem } from '@sharedTypes/DBTypes';
 import { Link } from 'react-router-dom';
 import ThumbCarousel from '../thumb-carousel/ThumbCarousel';
 

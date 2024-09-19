@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { LuReply, LuThumbsDown, LuThumbsUp } from 'react-icons/lu';
-import { Comment as CommentType } from '@/types/LocalTypes';
+import { Comment as CommentType } from '@sharedTypes/DBTypes';
 import CommentForm from './CommentForm';
 import { useState } from 'react';
 

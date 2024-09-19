@@ -1,30 +1,13 @@
 import { LuLogOut, LuMail } from 'react-icons/lu';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { useUserContext } from '@/hooks/contextHooks';
-import { useEffect, useState } from 'react';
-import { MediaItem } from '@/types/LocalTypes';
-import { useMedia } from '@/hooks/apiHooks';
+import { useMediaContext, useUserContext } from '@/hooks/contextHooks';
 import ProfileThumbnail from './ProfileThumbnail';
 
 const UserInfo = () => {
-  const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
-  const [refresh, setRefresh] = useState(false);
   const { user, handleLogout } = useUserContext();
-  const { getMediaByUser } = useMedia();
-
-  useEffect(() => {
-    if (user) {
-      getMediaByUser(user.user_id).then((data) => {
-        setMediaItems(data);
-      });
-    }
-  }, [user, getMediaByUser, refresh]);
-
-  const refreshMedia = () => {
-    setRefresh(!refresh);
-  };
-
+  const { userMediaItems } = useMediaContext();
+  console.log('userMediaItems', userMediaItems);
   return (
     <>
       {user && (
@@ -57,13 +40,13 @@ const UserInfo = () => {
             <div className="grid gap-2">
               <h2 className="text-lg font-semibold">Videos</h2>
               <div className="flex flex-wrap">
-                {mediaItems.map((mediaItem) => (
-                  <ProfileThumbnail
-                    key={mediaItem._id}
-                    mediaItem={mediaItem}
-                    refreshMedia={refreshMedia}
-                  />
-                ))}
+                {userMediaItems &&
+                  userMediaItems.map((mediaItem) => (
+                    <ProfileThumbnail
+                      key={mediaItem._id}
+                      mediaItem={mediaItem}
+                    />
+                  ))}
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { MediaItem } from '@/types/LocalTypes';
+import { MediaItem } from '@sharedTypes/DBTypes';
 import { Button } from '../ui/button';
 import { LuThumbsDown, LuThumbsUp } from 'react-icons/lu';
 

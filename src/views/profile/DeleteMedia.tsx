@@ -9,27 +9,19 @@ import {
   DialogTrigger,
   DialogClose,
 } from '@/components/ui/dialog';
-import { useMedia } from '@/hooks/apiHooks';
-import { MediaItem } from '@/types/LocalTypes';
+import { useMediaContext } from '@/hooks/contextHooks';
+import { MediaItem } from '@sharedTypes/DBTypes';
 import { LuTrash } from 'react-icons/lu';
 
-const DeleteMedia = (props: {
-  mediaItem: MediaItem;
-  refreshMedia: () => void;
-}) => {
-  const { mediaItem, refreshMedia } = props;
+const DeleteMedia = (props: { mediaItem: MediaItem }) => {
+  const { mediaItem } = props;
 
-  const { deleteMedia } = useMedia();
+  const { deleteMediaItem } = useMediaContext();
 
   const deleteHandler = async () => {
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        return;
-      }
-      const result = await deleteMedia(mediaItem._id, token);
-      alert(result.message);
-      refreshMedia();
+      await deleteMediaItem(mediaItem._id);
+      alert('Media Deleted');
     } catch (e) {
       console.error('delete failed', (e as Error).message);
     }

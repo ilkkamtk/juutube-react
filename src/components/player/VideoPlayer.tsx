@@ -1,4 +1,4 @@
-import { MediaItem } from '@/types/LocalTypes';
+import { MediaItem } from '@sharedTypes/DBTypes';
 import VideoButtons from './VideoButtons';
 import { useEffect, useRef } from 'react';
 import ReactPlayer from 'react-player/lazy';

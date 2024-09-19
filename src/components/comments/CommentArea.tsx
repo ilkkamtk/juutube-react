@@ -1,5 +1,5 @@
 import Comment from './Comment';
-import { MediaItem } from '@/types/LocalTypes';
+import { MediaItem } from '@sharedTypes/DBTypes';
 import CommentForm from './CommentForm';
 import React from 'react';
 

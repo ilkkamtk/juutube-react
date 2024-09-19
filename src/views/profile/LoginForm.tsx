@@ -3,7 +3,7 @@ import { CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { useUserContext } from '@/hooks/contextHooks';
-import { Credentials } from '@/types/LocalTypes';
+import { Credentials } from '@sharedTypes/DBTypes';
 import { useForm } from '@/hooks/formHooks';
 
 const LoginForm = () => {

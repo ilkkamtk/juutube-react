@@ -1,29 +1,26 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
-  DialogHeader,
   DialogTrigger,
   DialogClose,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useMedia } from '@/hooks/apiHooks';
+import { useMediaContext } from '@/hooks/contextHooks';
 import { useForm } from '@/hooks/formHooks';
-import { MediaItem } from '@/types/LocalTypes';
+import { MediaItem } from '@sharedTypes/DBTypes';
+import { DialogTitle } from '@radix-ui/react-dialog';
 import { useState } from 'react';
 import { LuPen } from 'react-icons/lu';
 
-const ModifyMedia = (props: {
-  mediaItem: MediaItem;
-  refreshMedia: () => void;
-}) => {
-  const { mediaItem, refreshMedia } = props;
-  const { putMedia } = useMedia();
+const ModifyMedia = (props: { mediaItem: MediaItem }) => {
+  const { mediaItem } = props;
   const [open, setOpen] = useState(false);
+  const { updateMediaItem } = useMediaContext();
 
   const initValues: Pick<MediaItem, 'title' | 'description'> & {
     tags: string;
@@ -34,22 +31,12 @@ const ModifyMedia = (props: {
   };
 
   const doModify = async () => {
-    console.log(inputs);
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('Token not found');
-      }
-      const mediaInput = {
-        title: inputs.title,
-        description: inputs.description,
-        tags: inputs.tags.split(',').map((tag) => tag.trim()),
-      };
-      await putMedia(mediaItem._id, mediaInput, token);
+      console.log(inputs);
+      await updateMediaItem(mediaItem, inputs);
       setOpen(false);
-      refreshMedia();
     } catch (error) {
-      console.error('doModify failed', error);
+      console.error('update failed', (error as Error).message);
     }
   };
 
@@ -65,56 +52,51 @@ const ModifyMedia = (props: {
         <span className="sr-only">Delete</span>
       </DialogTrigger>
       <DialogContent>
+        <DialogTitle>Modify your video details.</DialogTitle>
+        <DialogDescription>
+          Change the title, description, or tags for your video.
+        </DialogDescription>
         <form onSubmit={handleSubmit}>
-          <DialogHeader>
-            <DialogDescription>
-              <Card>
-                <CardHeader>
-                  <h2 className="text-2xl font-bold">
-                    Modify your video details.
-                  </h2>
-                </CardHeader>
-                <CardContent className="space-y-4 px-6 py-8">
-                  <div className="space-y-2">
-                    <Label htmlFor="title">Title</Label>
-                    <Input
-                      type="text"
-                      name="title"
-                      id="title"
-                      value={inputs.title}
-                      placeholder="Title for your video"
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="description">Description</Label>
-                    <Input
-                      type="text"
-                      name="description"
-                      id="description"
-                      value={inputs.description}
-                      placeholder="Description for your video"
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="tags">Tags</Label>
-                    <Input
-                      type="text"
-                      name="tags"
-                      id="tags"
-                      value={inputs.tags}
-                      placeholder="Tags for your video"
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            </DialogDescription>
-          </DialogHeader>
+          <Card>
+            <CardContent className="space-y-4 px-6 py-8">
+              <div className="space-y-2">
+                <Label htmlFor="title">Title</Label>
+                <Input
+                  type="text"
+                  name="title"
+                  id="title"
+                  value={inputs.title}
+                  placeholder="Title for your video"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="description">Description</Label>
+                <Input
+                  type="text"
+                  name="description"
+                  id="description"
+                  value={inputs.description}
+                  placeholder="Description for your video"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="tags">Tags</Label>
+                <Input
+                  type="text"
+                  name="tags"
+                  id="tags"
+                  value={inputs.tags}
+                  placeholder="Tags for your video"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  onChange={handleInputChange}
+                />
+              </div>
+            </CardContent>
+          </Card>
           <DialogFooter>
             <Button variant="ghost">Save</Button>
             <DialogClose asChild>
